@@ -1,0 +1,52 @@
+{
+  "tools": [
+    {
+      "icon": {
+        "name": "fa-docker",
+        "color": "sky",
+        "intensity": 400,
+        "brand": true
+      },
+      "name": "Portainer",
+      "host": "vps_portainer",
+      "port": 9000,
+      "root": "/portainer"
+    },
+    {
+      "icon": {
+        "name": "fa-network-wired",
+        "color": "emerald",
+        "intensity": 400,
+        "brand": false
+      },
+      "name": "Nginx Proxy Manager",
+      "host": "vps_proxy",
+      "port": 81,
+      "root": "/proxy"
+    },
+    {
+      "icon": {
+        "name": "fa-database",
+        "color": "amber",
+        "intensity": 400,
+        "brand": false
+      },
+      "name": "Cloudbeaver",
+      "host": "vps_cloudbeaver",
+      "port": 8978,
+      "root": "/cloudbeaver"
+    },
+    {
+      "icon": {
+        "name": "fa-cubes",
+        "color": "orange",
+        "intensity": 400,
+        "brand": false
+      },
+      "name": "MinIO",
+      "host": "vps_minio",
+      "port": 9001,
+      "root": "/minio"
+    }
+  ]
+}

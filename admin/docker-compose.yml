@@ -1,0 +1,55 @@
+name: vps_admin
+
+services:
+  dashboard:
+    container_name: vps_dashboard
+    image: vps_dashboard:latest
+    build:
+      context: ./dashboard
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./config.json:/var/www/html/config.json
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - vps_network
+    depends_on:
+      portainer:
+        condition: service_started
+      cloudbeaver:
+        condition: service_started
+
+  portainer:
+    container_name: vps_portainer
+    image: portainer/portainer-ce:2.39.4
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    expose:
+      - "9000"
+    networks:
+      - vps_network
+      
+  cloudbeaver:
+    container_name: vps_cloudbeaver
+    image: dbeaver/cloudbeaver:latest
+    restart: unless-stopped
+    environment:
+      CLOUDBEAVER_ROOT_URI: /cloudbeaver/
+    volumes:
+      - cloudbeaver_data:/opt/cloudbeaver/workspace
+    expose:
+      - "8978"
+    networks:
+      - vps_network
+
+volumes:
+  portainer_data:
+  cloudbeaver_data:
+
+networks:
+  vps_network:
+    external: true
