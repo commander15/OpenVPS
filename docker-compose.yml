@@ -23,11 +23,10 @@ services:
     expose:
       - "9000" # S3 API Port
     ports:
-      - "${VPS_PRIVATE_IP}:9001:9001" # Web Dashboard UI Port
+      - '${VPS_PRIVATE_IP}:9001:9001' # Web Dashboard UI Port
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-      MINIO_BROWSER_REDIRECT_URL: http://vps-admin.local/minio/
     volumes:
       - minio_data:/data
     networks:
