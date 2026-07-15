@@ -36,13 +36,13 @@ function generateCardMarkup(tool) {
     var public_ports = '';
     if ((tool.public_ports || []).length > 0) {
         public_ports = `<div class="w-2"></div>`;
-        public_ports += `<span class="text-sky-400 font-semibold">${tool.public_ports.join(',')}</span>`;
+        public_ports += `<span class="text-emerald-400 font-semibold">${tool.public_ports.join(',')}</span>`;
     }
     
     var protected_ports = '';
     if ((tool.protected_ports || []).length > 0) {
         protected_ports = `<div class="w-2"></div>`;
-        protected_ports += `<span class="text-emerald-400 font-semibold">${tool.protected_ports.join(',')}</span>`;
+        protected_ports += `<span class="text-sky-400 font-semibold">${tool.protected_ports.join(',')}</span>`;
     }
 
     return `
