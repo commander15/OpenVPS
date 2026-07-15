@@ -29,8 +29,8 @@ function getIconHTML(icon) {
  * @returns {string} Complete Card HTML template
  */
 function generateCardMarkup(tool) {
-    // Ensures clean absolute directory syntax (e.g., '/portainer/' or '/proxy/')
-    const cleanRoot = tool.root.endsWith('/') ? tool.root : `${tool.root}/`;
+    const toolUrl = `http://${window.location.hostname}:${tool.port}`;
+    
     const iconHTML = getIconHTML(tool.icon);
 
     return `
@@ -63,7 +63,7 @@ function generateCardMarkup(tool) {
             </div>
 
             <div class="mt-6">
-                <a href="${cleanRoot}" target="_blank" rel="noopener noreferrer" 
+                <a href="${toolUrl}" target="_blank" rel="noopener noreferrer" 
                    class="w-full inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white py-2.5 px-4 rounded-lg font-medium text-sm transition-all duration-200">
                     Open Panel
                     <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
