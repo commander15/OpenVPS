@@ -8,8 +8,7 @@ services:
     ports:
       - '80:80'
       - '443:443'
-    expose:
-      - '81' # Admin dashboard
+      - '${VPS_PRIVATE_IP}:81:81' # Admin dashboard
     volumes:
       - nginx_data:/data
       - letsencrypt_data:/etc/letsencrypt
@@ -23,7 +22,8 @@ services:
     restart: unless-stopped
     expose:
       - "9000" # S3 API Port
-      - "9001" # Web Dashboard UI Port
+    ports:
+      - "${VPS_PRIVATE_IP}:9001:9001" # Web Dashboard UI Port
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}

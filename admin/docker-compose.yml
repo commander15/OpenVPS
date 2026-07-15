@@ -28,8 +28,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
-    expose:
-      - "9000"
+    ports:
+      - "${VPS_PRIVATE_IP}:9000:9000"
     networks:
       - vps_network
       
@@ -42,7 +42,7 @@ services:
     volumes:
       - cloudbeaver_data:/opt/cloudbeaver/workspace
     expose:
-      - "8978"
+      - "${VPS_PRIVATE_IP}:8978:8978"
     networks:
       - vps_network
 
