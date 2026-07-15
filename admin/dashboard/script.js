@@ -38,6 +38,12 @@ function generateCardMarkup(tool) {
         public_ports = `<div class="w-2"></div>`;
         public_ports += `<span class="text-sky-400 font-semibold">${tool.public_ports.join(',')}</span>`;
     }
+    
+    var protected_ports = '';
+    if ((tool.protected_ports || []).length > 0) {
+        protected_ports = `<div class="w-2"></div>`;
+        protected_ports += `<span class="text-emerald-400 font-semibold">${tool.protected_ports.join(',')}</span>`;
+    }
 
     return `
         <div class="bg-cardBg border border-slate-800 hover:border-indigo-500/50 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/5 flex flex-col justify-between group">
@@ -66,6 +72,7 @@ function generateCardMarkup(tool) {
                         <div class="grow"></div>
                         <span class="text-indigo-400 font-semibold">${tool.admin_port}</span>
                         ${public_ports}
+                        ${protected_ports}
                     </div>
                 </div>
             </div>

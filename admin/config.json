@@ -47,7 +47,7 @@
       "name": "MinIO",
       "host": "vps_minio",
       "admin_port": 9001,
-      "public_ports": [ 9000 ],
+      "protected_ports": [ 9000 ],
       "root": "/minio"
     }
   ]
