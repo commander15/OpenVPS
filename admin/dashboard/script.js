@@ -32,16 +32,11 @@ function generateCardMarkup(tool) {
     const toolUrl = `http://${window.location.hostname}:${tool.admin_port}`;
     
     const iconHTML = getIconHTML(tool.icon);
-    var public_ports = '';
     
+    var public_ports = '';
     if ((tool.public_ports || []).length > 0) {
-        public_ports = `<span class="text-sky-400 font-semibold">${tool.public_ports.join(', ')}</span>`;
-    }
-
-    var admin_port = '';
-    if ((tool.admin_port || 0) > 0) {
-        admin_port = `<div class="bg-emerald-400 w-1 h-2"></div>`;
-        admin_port += `<span class="text-indigo-400 font-semibold">${tool.admin_port}</span>`;
+        public_ports = `<div class="bg-emerald-400 w-1 h-2 rounded-sm"></div>`;
+        public_ports += `<span class="text-sky-400 font-semibold">${tool.public_ports.join(', ')}</span>`;
     }
 
     return `
@@ -66,12 +61,12 @@ function generateCardMarkup(tool) {
                         <span class="text-slate-500">Host:</span> 
                         <span class="text-slate-300">${tool.host}</span>
                     </p>
-                    <p class="flex justify-between">
-                        <span class="text-slate-500">Port:</span> 
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Ports:</span>
+                        <div class="grow"></div>
                         <span class="text-indigo-400 font-semibold">${tool.admin_port}</span>
                         ${public_ports}
-                        ${admin_port}
-                    </p>
+                    </div>
                 </div>
             </div>
 
