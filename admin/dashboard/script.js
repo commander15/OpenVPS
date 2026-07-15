@@ -35,8 +35,8 @@ function generateCardMarkup(tool) {
     
     var public_ports = '';
     if ((tool.public_ports || []).length > 0) {
-        public_ports = `<div class="bg-emerald-400 w-1 h-full rounded-sm mx-1"></div>`;
-        public_ports += `<span class="text-sky-400 font-semibold">${tool.public_ports.join(', ')}</span>`;
+        public_ports = `<div class="w-2"></div>`;
+        public_ports += `<span class="text-sky-400 font-semibold">${tool.public_ports.join(',')}</span>`;
     }
 
     return `
