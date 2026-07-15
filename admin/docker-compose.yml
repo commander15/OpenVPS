@@ -10,7 +10,7 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./config.json:/var/www/html/config.json
     ports:
-      - "127.0.0.1:8080:80"
+      - "${VPS_PRIVATE_IP}:8080:80"
     networks:
       - vps_network
     depends_on:
