@@ -29,9 +29,14 @@ function getIconHTML(icon) {
  * @returns {string} Complete Card HTML template
  */
 function generateCardMarkup(tool) {
-    const toolUrl = `http://${window.location.hostname}:${tool.port}`;
+    const toolUrl = `http://${window.location.hostname}:${tool.admin_port}`;
     
     const iconHTML = getIconHTML(tool.icon);
+    
+    var public_ports = '';
+    if ((tool.admin_ports || []).length > 0) {
+        public_ports = `<span class="text-sky-400 font-semibold">${tool.public_ports.join(', ')}</span>`;
+    }
 
     return `
         <div class="bg-cardBg border border-slate-800 hover:border-indigo-500/50 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/5 flex flex-col justify-between group">
@@ -57,7 +62,8 @@ function generateCardMarkup(tool) {
                     </p>
                     <p class="flex justify-between">
                         <span class="text-slate-500">Port:</span> 
-                        <span class="text-indigo-400 font-semibold">${tool.port}</span>
+                        <span class="text-indigo-400 font-semibold">${tool.admin_port}</span>
+                        ${public_ports}
                     </p>
                 </div>
             </div>

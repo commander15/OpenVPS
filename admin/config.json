@@ -7,10 +7,10 @@
         "intensity": 400,
         "brand": true
       },
-      "name": "Portainer",
-      "host": "vps_portainer",
-      "port": 9000,
-      "root": "/portainer"
+      "name": "admin_portainer",
+      "host": "vps_admin_portainer",
+      "admin_port": 9000,
+      "root": "/admin_portainer"
     },
     {
       "icon": {
@@ -21,7 +21,8 @@
       },
       "name": "Nginx Proxy Manager",
       "host": "vps_proxy",
-      "port": 81,
+      "admin_port": 81,
+      "public_ports": [ 443, 80 ],
       "root": "/proxy"
     },
     {
@@ -33,7 +34,7 @@
       },
       "name": "Cloudbeaver",
       "host": "vps_cloudbeaver",
-      "port": 8978,
+      "admin_port": 8978,
       "root": "/cloudbeaver"
     },
     {
@@ -45,7 +46,8 @@
       },
       "name": "MinIO",
       "host": "vps_minio",
-      "port": 9001,
+      "admin_port": 9001,
+      "public_ports": [ 9000 ],
       "root": "/minio"
     }
   ]
