@@ -19,5 +19,3 @@ fi
 
 # Booting
 $SCRIPT_DIR/setup-networks.sh
-$SCRIPT_DIR/vps.sh up -d
-$SCRIPT_DIR/vps-admin.sh up --build -d
