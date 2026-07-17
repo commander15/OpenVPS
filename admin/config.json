@@ -7,10 +7,10 @@
         "intensity": 400,
         "brand": true
       },
-      "name": "admin_portainer",
-      "host": "vps_admin_portainer",
+      "name": "Portainer",
+      "host": "vps-docker-manager",
       "admin_port": 9000,
-      "root": "/admin_portainer"
+      "root": "/"
     },
     {
       "icon": {
@@ -20,10 +20,10 @@
         "brand": false
       },
       "name": "Nginx Proxy Manager",
-      "host": "vps_proxy",
+      "host": "vps-proxy",
       "admin_port": 81,
       "public_ports": [ 443, 80 ],
-      "root": "/proxy"
+      "root": "/"
     },
     {
       "icon": {
@@ -32,10 +32,10 @@
         "intensity": 400,
         "brand": false
       },
-      "name": "Cloudbeaver",
-      "host": "vps_cloudbeaver",
-      "admin_port": 8978,
-      "root": "/cloudbeaver"
+      "name": "DbGate",
+      "host": "vps-db-manager",
+      "admin_port": 3000,
+      "root": "/"
     },
     {
       "icon": {
@@ -45,10 +45,10 @@
         "brand": false
       },
       "name": "MinIO",
-      "host": "vps_minio",
+      "host": "vps-s3",
       "admin_port": 9001,
       "protected_ports": [ 9000 ],
-      "root": "/minio"
+      "root": "/"
     }
   ]
 }

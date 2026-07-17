@@ -1,3 +1,5 @@
+const API_URL = '/api/v1';
+
 /**
  * Generates dynamic FontAwesome classes and Tailwind color classes based on the icon configuration.
  * Includes a clean default configuration if an icon object is missing or invalid.
@@ -125,7 +127,7 @@ function renderTools(data) {
 
 // Global initialization setup
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('config.json')
+    fetch(`${API_URL}/configuration`)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP status error: ${response.status}`);
             return response.json();
