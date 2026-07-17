@@ -2,11 +2,7 @@
 
 # 1. Check if no command was provided at all
 if [ -z "${1-}" ]; then
-    if [ -f "README.md" ]; then
-        cat "README.md"
-    else
-        echo "ℹ️ No command provided. (Also, README.md was not found)"
-    fi
+    bin/help.sh
     exit 0
 fi
 

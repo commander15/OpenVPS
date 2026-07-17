@@ -52,6 +52,11 @@ vps up
 vps admin up
 ```
 
+- Start everything:
+```bash
+vps all up
+```
+
 - Stop everything:
 ```bash
 vps down
