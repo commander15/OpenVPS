@@ -13,6 +13,9 @@ services:
       - "${VPS_PRIVATE_IP}:8080:80"
     networks:
       - internal_network
+    depends_on:
+      dashboard-backend:
+        condition: service_started
     profiles:
       - admin
       
