@@ -52,12 +52,12 @@ vps up
 vps admin up
 ```
 
-- Stop everything (automatically stops admin):
+- Stop everything:
 ```bash
 vps down
 ```
 
-- Create or delete external docker services (created automatically during openvps installation):
+- Create or delete external docker networks (created automatically during openvps installation):
 ```bash
 vps network up
 vps network down
@@ -73,10 +73,10 @@ vps logs
 vps update
 ```
 
-### Note
-Under the hood, vps commands run docker compose --profile "*" **your args**.
-While vps admin commands run docker compose --profile "admin" **your args**.
-Also, vps update command run git fetch and git reset --hard (overiding all changes you've made by yourself so avoid chaning any file in OpenVPS directoy).
+### Notes
+- Under the hood, vps commands run docker compose --profile "*" **your args**
+- While vps admin commands run docker compose --profile "admin" **your args**
+- Also, vps update command run git fetch and git reset --hard (overiding all changes you've made by yourself so avoid changing any file in OpenVPS directoy, except .env of course ;))
 
 ## 📦 Directory Structure
 
@@ -113,11 +113,6 @@ Critical administrative tools—such as Portainer (Docker Manager) and DbGate (D
 - **The Recommended Setup (VPN / Tailscale)**: Set PRIVATE_IP to your VPN interface IP (e.g., your Tailscale IP). This allows you to securely access your admin dashboards from anywhere on your private network (Tailnet), completely hidden from public internet probes and brute-force attacks.
 
 - **The Public Fallback (Not Recommended)**: You can set PRIVATE_IP to 0.0.0.0 to make your administration tools publicly accessible, though this is discouraged for security reasons.
-Ah, good catch! Let’s weave that right in so your documentation matches your `docker-compose.yml` exactly.
-
-Here is the updated **S3 Object Storage** section featuring the `vps-s3` container hostname:
-
-Here is the new **Database Administration** section for your documentation. It clearly outlines how database containers connect to your `vps-dbgate` workspace across your dedicated `database-network`.
 
 ## 🗄️ Database Administration
 
