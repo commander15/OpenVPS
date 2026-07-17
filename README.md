@@ -85,26 +85,25 @@ openvps/
 │   ├── vps.sh           # Main router & controller
 │   ├── core.sh          # Core stacks wrapper
 │   ├── admin.sh         # Administrative backend/frontend wrapper
-│   └── networks.sh      # Shared Docker network management (vps_network, web_network)
-├── frontend/            # Angular SPA Dashboard
-│   ├── Dockerfile       # Light-weight Nginx multi-stage build
-│   └── ...
-├── backend/             # Laravel SQLite-backed REST API
-│   ├── Dockerfile       # Optimized PHP 8.3 FPM image
-│   └── ...
+│   └── network.sh       # Shared Docker network management (frontend-network, etc)
 ├── vps-install.sh       # Global CLI symlink installer
 ├── vps-uninstall.sh     # Global CLI uninstaller & service cleanup
+├── docker-compose.yml   # This project kernel, a compose ap that run all the OpenVPS infra
+├── .env.example         # A stratup config file, ready to use
 └── README.md            # You are here!
 
 ## 🔒 Network Security & IP Bindings
 The .env file exposes both a PUBLIC_IP and a PRIVATE_IP variable to achieve a zero-trust, secure-by-default routing architecture.
 
 ### 🌐 Internal Networking
-OpenVPS runs on two isolated, shared Docker networks to keep communications clean and secure:
 
-1. vps_network: Used for communication between the core system, target local containers, and system-monitoring utilities.
+OpenVPS runs on isolated, shared Docker networks to keep internal communication clean, secure, and performant:
 
-2. web_network: Reserved for routing HTTP traffic from your public reverse proxy (e.g., Nginx Proxy Manager) directly to the target services (your apps web containers like nginx or php-fpm ones).
+- **frontend-network**: Reserved strictly for edge routing. It channels HTTP/HTTPS traffic from your public reverse proxy (Nginx Proxy Manager) directly to your target application web containers (e.g., standalone Nginx or PHP-FPM web layers).
+
+- **backend-network**: Handles core microservice traffic. This network is dedicated to secure, internal communication between your app backends and infrastructure services, such as the S3 API interface on your object storage platform (MinIO).
+
+- **database-network**: Enforces strict state isolation. This internal-only network links application backends directly to their respective databases and connects everything securely to your central database administrator panel (DBGate). By decoupling this from the frontend and object storage layers, it mitigates lateral attack risks and completely locks down raw database ports from unauthorized access.
 
 ### 🌐 Public Routing (PUBLIC_IP)
 Critical administrative tools—such as Portainer (Docker Manager) and DbGate (Database Manager)—bind exclusively to your PRIVATE_IP.
@@ -114,6 +113,25 @@ Critical administrative tools—such as Portainer (Docker Manager) and DbGate (D
 - **The Recommended Setup (VPN / Tailscale)**: Set PRIVATE_IP to your VPN interface IP (e.g., your Tailscale IP). This allows you to securely access your admin dashboards from anywhere on your private network (Tailnet), completely hidden from public internet probes and brute-force attacks.
 
 - **The Public Fallback (Not Recommended)**: You can set PRIVATE_IP to 0.0.0.0 to make your administration tools publicly accessible, though this is discouraged for security reasons.
+Ah, good catch! Let’s weave that right in so your documentation matches your `docker-compose.yml` exactly.
+
+Here is the updated **S3 Object Storage** section featuring the `vps-s3` container hostname:
+
+Here is the new **Database Administration** section for your documentation. It clearly outlines how database containers connect to your `vps-dbgate` workspace across your dedicated `database-network`.
+
+## 🗄️ Database Administration
+
+OpenVPS groups your application databases into a strictly isolated network layer managed via a single, centralized database management console:
+
+1. **Centralized Workspace (`vps-database-manager`)**: The database administration interface runs within the **`vps-database-manager`** container. This console is bound exclusively to your private network adapter (as specified by your VPS_PRIVATE_IP setting via port `3000`), allowing you to inspect schemas, execute raw queries, and manage records securely via your browser without exposing database ports publicly.
+2. **Internal Connectivity (`database-network`)**: Every application database container (e.g., PostgreSQL, MariaDB, Redis, MongoDB) must join the shared **`database-network`**. Because **`vps-database-manager`** is a member of this network, it can instantly discover and connect to your database containers using their native internal Docker container names (e.g., `db://app-postgres-container:5432`).
+
+## 📦 S3 Object Storage
+
+OpenVPS leverages a centralized, S3-compatible storage engine powered by MinIO to decouple application state from local server directories:
+
+1. **API Pipeline (`backend-network`)**: Your individual application backends hook directly into the **`vps-s3`** container hostname via port `9000` using standard S3 SDK clients. This allows workloads to cleanly upload, fetch, and process media assets, backups, or raw datasets across an optimized, internal network channel.
+2. **Administration Workspace (`Tailnet / Port 9001`)**: The interactive MinIO console is safely bound to your private Tailscale network adapter. This lets you securely create buckets, monitor storage cluster performance, manage access keys, and organize object policies directly through your admin browser without exposing the **`vps-s3`** management portal to the public internet.
 
 ## 🧹 Uninstallation
 

@@ -12,7 +12,7 @@ services:
     ports:
       - "${VPS_PRIVATE_IP}:8080:80"
     networks:
-      - internal_network
+      - dashboard-network
     depends_on:
       dashboard-backend:
         condition: service_started
@@ -30,7 +30,7 @@ services:
     expose:
       - "8000"
     networks:
-      - internal_network
+      - dashboard-network
     profiles:
       - admin
 
@@ -57,12 +57,12 @@ services:
     ports:
       - "${VPS_PRIVATE_IP}:3000:3000"
     networks:
-      - backend_network
+      - database-network
     profiles:
       - admin
 
   proxy-manager:
-    container_name: vps-proxy-manager
+    container_name: vps-proxy
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     ports:
@@ -73,11 +73,11 @@ services:
       - nginx_data:/data
       - letsencrypt_data:/etc/letsencrypt
     networks:
-      - web_network
+      - frontend-network
     profiles:
       - core
 
-  s3:
+  s3-storage:
     container_name: vps-s3
     image: minio/minio:RELEASE.2025-09-07T16-13-09Z-cpuv1
     restart: unless-stopped
@@ -92,7 +92,7 @@ services:
     volumes:
       - minio_data:/data
     networks:
-      - backend_network
+      - backend-network
     profiles:
       - core
 
@@ -104,11 +104,14 @@ volumes:
   minio_data:
 
 networks:
-  internal_network:
+  dashboard-network:
     driver: bridge
       
-  web_network:
+  frontend-network:
     external: true
 
-  backend_network:
+  backend-network:
+    external: true
+
+  database-network:
     external: true
