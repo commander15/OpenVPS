@@ -7,7 +7,7 @@
         "intensity": 400,
         "brand": true
       },
-      "name": "Portainer",
+      "name": "Docker Manager",
       "host": "vps-docker-manager",
       "admin_port": 9000,
       "root": "/"
@@ -19,8 +19,8 @@
         "intensity": 400,
         "brand": false
       },
-      "name": "Nginx Proxy Manager",
-      "host": "vps-proxy",
+      "name": "Proxy Manager",
+      "host": "vps-proxy-manager",
       "admin_port": 81,
       "public_ports": [ 443, 80 ],
       "root": "/"
@@ -32,7 +32,7 @@
         "intensity": 400,
         "brand": false
       },
-      "name": "DbGate",
+      "name": "Database Manager",
       "host": "vps-db-manager",
       "admin_port": 3000,
       "root": "/"
@@ -44,11 +44,22 @@
         "intensity": 400,
         "brand": false
       },
-      "name": "MinIO",
-      "host": "vps-s3",
-      "admin_port": 9001,
-      "protected_ports": [ 9000 ],
+      "name": "File Manager",
+      "host": "vps-file-manager",
+      "admin_port": 8334,
       "root": "/"
+    },
+    {
+      "icon": {
+        "name": "fa-network-wired",
+        "color": "orange",
+        "intensity": 400,
+        "brand": false
+      },
+      "name": "DNS Manager",
+      "host": "vps-dns-manager",
+      "admin_port": 82,
+      "root": "/admin"
     }
   ]
 }

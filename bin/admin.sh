@@ -8,10 +8,10 @@ fi
 
 # 2. Set profile to "*" on up, "admin" otherwise
 if [ "$1" = "up" ]; then
-    PROFILE="*"
+    PRE_ARGS="--profile core"
 else
-    PROFILE="admin"
+    PRE_ARGS=""
 fi
 
 # 2. Forward all arguments ("$@") directly to docker compose
-docker compose --profile "$PROFILE" "$@"
+docker compose $PRE_ARGS --profile admin "$@"

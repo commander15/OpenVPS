@@ -1,12 +1,12 @@
 #!/bin/bash
 
-START_AT="43"
-STOP_AT="134"
+START_AT="25"
+STOP_AT="61"
 
 # FIX: Added brackets and a semicolon before 'then'
 if [ "$1" = "commands" ]; then
-    START_AT="43"
-    STOP_AT="73"
+    START_AT="25"
+    STOP_AT="61"
 fi
 
 # If STOP_AT is "MAX", determine the correct endpoint

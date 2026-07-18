@@ -7,5 +7,6 @@ BRANCH=main
 git fetch origin $BRANCH
 git reset --hard origin/$BRANCH
 
-# Rebuild images
+# Rebuild and pull images
 docker compose --profile "*" build
+docker compose pull
