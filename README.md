@@ -8,36 +8,18 @@
 
 Get OpenVPS up and running on your server with these quick steps:
 
-### 1. Prerequisites
+### 1. Install with one command
 Ensure you have Docker and Git installed on your system:
 ```bash
-# Debian/Ubuntu quick-install for Docker (if needed)
-curl -fsSL [https://get.docker.com](https://get.docker.com) -o get-docker.sh && sh get-docker.sh
+curl -fsSL https://raw.githubusercontent.com/commander15/OpenVPS/refs/heads/main/scripts/installer.sh | sh
 ```
 
-### 2. Clone the Repository
-Clone your OpenVPS repository to your server and navigate into the project root:
-```bash
-git clone [https://github.com/yourusername/openvps.git](https://github.com/yourusername/openvps.git)
-cd openvps
-```
-
-### 3. Run the Installer
-Run the installer with sudo to make the scripts executable, initialize the shared Docker networks, and register the global vps system command:
-```bash
-sudo ./vps-install.sh
-```
-
-### 4. Initialize Your Environment
+### 2. Initialize Your Environment
 
 Run the CLI tool for the first time. It will notice your .env is missing, safely copy it from .env.example, and prompt you to configure it:
 ```bash
 vps
-```
-
-Open the newly created .env file and update your database credentials, domain names, or secrets:
-```bash
-nano .env
+nano ~/openvps/.env
 ```
 
 ## 🚀 Quick Start / Common Commands
