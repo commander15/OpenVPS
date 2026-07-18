@@ -90,7 +90,7 @@ services:
     restart: unless-stopped
     user: "1000:1000"
     volumes:
-      - ~/apps:/app/deployments
+      - ${VPS_DEPLOYMENTS_DIR:-~/apps}:/app/deployments
       - filestash_data:/app/data/state
     networks:
       - backend-network
