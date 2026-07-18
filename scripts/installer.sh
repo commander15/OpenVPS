@@ -34,8 +34,7 @@ case "$response" in
         apt-get update && apt-get install -y curl git docker.io
         ;;
     *)
-        echo "🔄 Only ensuring curl is installed..."
-        apt-get update && apt-get install -y curl
+        echo "🔄 Tools installation skipped !"
         ;;
 esac
 
