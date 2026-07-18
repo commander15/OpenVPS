@@ -23,7 +23,21 @@ fi
 
 # 2. Install curl, git and docker
 echo "📦 Installing prerequisites..."
-apt-get update && apt-get install -y curl git docker.io
+
+# Force the prompt to read directly from the user's keyboard
+echo "Do you want to install git and docker too? (y/N)"
+read -r response </dev/tty
+
+case "$response" in
+    [yY][eE][sS]|[yY])
+        echo "🔄 Updating package lists and installing git & docker..."
+        apt-get update && apt-get install -y curl git docker.io
+        ;;
+    *)
+        echo "🔄 Only ensuring curl is installed..."
+        apt-get update && apt-get install -y curl
+        ;;
+esac
 
 # 3. Clone Repo as the non-root user
 echo "🔄 Cloning OpenVPS repository..."
