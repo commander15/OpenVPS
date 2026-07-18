@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+URL="https://raw.githubusercontent.com/commander15/OpenVPS/refs/heads/main/scripts/installer.sh"
 
 # Exit immediately if a command fails, or if an uninitialized variable is used
 set -euo pipefail
@@ -8,10 +10,15 @@ set -euo pipefail
 RELEVENT_USER=${SUDO_USER:-$(stat -c '%U' `pwd`)}
 USER_HOME=$(eval echo "~$RELEVENT_USER")
 
-# 1. Check if the script is run with sudo/root privileges
-if [ "$EUID" -ne 0 ]; then
-    echo "❌ Error: Please run this installation script with sudo."
-    exit 1
+# 1. Check if the user is root. If not, automatically elevate using sudo.
+if [ "$(id -u)" -ne 0 ]; then
+    if ! command -v sudo >/dev/null 2>&1; then
+        echo "❌ Error: sudo is not installed. Run as root." >&2
+        exit 1
+    fi
+
+    # Read password from terminal device, re-download, and run as root
+    exec sudo </dev/tty sh -c "$(curl -fsSL $URL)" -- "$@"
 fi
 
 # 2. Install curl, git and docker
