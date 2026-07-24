@@ -19,17 +19,13 @@ fi
 echo "🛑 Bringing down all docker containers..."
 if [ -f "$SCRIPTS_DIR/vps.sh" ]; then
     # Bring down both core and admin if they are active
-    sudo -i -u "$RELEVENT_USER" "$SCRIPTS_DIR/vps.sh" down || true
+    sudo -i -u "$RELEVENT_USER" "$SCRIPTS_DIR/vps.sh" all down || true
 else
     echo "ℹ️ vps.sh not found, skipping container teardown."
 fi
 
 echo "🌐 Removing shared docker networks..."
-if [ -f "$SCRIPTS_DIR/network.sh" ]; then
-    sudo -i -u "$RELEVENT_USER" "$SCRIPTS_DIR/network.sh" down || true
-else
-    echo "ℹ️ network.sh not found, skipping network teardown."
-fi
+sudo -i -u "$RELEVENT_USER" cd "$INSTALLER_DIR" && ./.venv/bin/python3 -m scripts.network down || true
 
 # 4. Safely remove the symlink
 if [ -L "$BIN_DIR/vps" ]; then
