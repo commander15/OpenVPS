@@ -11,7 +11,7 @@ SCRIPTS_DIR="$ROOT_DIR/scripts"
 # 2. Ensure that an .env file is present, otherwise copy .env.example to .env
 if [ ! -f "$ROOT_DIR/.env" ]; then
     if [ -f "$ROOT_DIR/.env.example" ]; then
-        echo "📝 .env file not found. Creating one from .env.example..."
+        echo "📝 .env file not found. Creating one..."
         cp "$ROOT_DIR/.env.example" "$ROOT_DIR/.env"
         echo "⚠️  Created .env! Please review and update its values before proceeding."
         exit 0
