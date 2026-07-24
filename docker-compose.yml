@@ -83,7 +83,7 @@ services:
     networks:
       - database-network
     ports:
-      - "${DATABASE_MANAGER_IP:-127.0.0.1}:${DATABASE_MANAGER_PORT:-3000}:3000"
+      - "${DB_MANAGER_IP:-127.0.0.1}:${DB_MANAGER_PORT:-3000}:3000"
     profiles:
       - admin
 
