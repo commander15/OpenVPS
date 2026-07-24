@@ -15,16 +15,17 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# 3. Create the symlink to /usr/local/bin/vps if it doesn't already exist
+# 3. Create the symlink to /usr/local/bin/vps
 echo "🔗 Creating symlink: $BIN_DIR/vps -> $SCRIPTS_DIR/vps.sh"
 ln -sf "$SCRIPTS_DIR/vps.sh" "$BIN_DIR/vps"
 
-# 4. Trigger the shared docker networks creation script (runs 'up' by default)
-if [ -f "$SCRIPTS_DIR/network.sh" ]; then
-    echo "🌐 Setting up shared Docker networks..."
-    sudo -i -u "$RELEVENT_USER" "$SCRIPTS_DIR/network.sh" up
-else
-    echo "⚠️ Warning: networks.sh not found at $SCRIPTS_DIR/network.sh"
-fi
+# 4. Setting up Python env
+echo "Setting up Python environment..."
+apt-get install -y python3-venv
+sudo -i -u "$RELEVENT_USER" python3 -m venv "$INSTALLER_DIR/.venv"
+sudo -i -u "$RELEVENT_USER" "$INSTALLER_DIR/.venv/bin/pip" install python-dotenv requests tzlocal psutil docker
+
+# 5. Trigger the shared docker networks creation script (runs 'up' by default)
+sudo -i -u "$RELEVENT_USER" cd "$INSTALLER_DIR" && ./.venv/bin/python3 -m scripts.network up
 
 echo "✅ Installation completed successfully! You can now use the 'vps' command anywhere."

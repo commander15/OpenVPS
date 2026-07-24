@@ -1,0 +1,5 @@
+$ORIGIN internal.
+@                     900       IN  SOA           vps-dns-server. hostadmin 9 900 300 604800 900
+@                     14400     IN  NS            vps-dns-server.
+@                     3600      IN  A             PROXY_IP
+*                     3600      IN  A             PROXY_IP

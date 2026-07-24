@@ -58,8 +58,8 @@
       },
       "name": "DNS Manager",
       "host": "vps-dns-manager",
-      "admin_port": 82,
-      "root": "/admin"
+      "admin_port": 5380,
+      "root": "/"
     }
   ]
 }

@@ -11,7 +11,7 @@ services:
       - ./admin/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./admin/config.json:/var/www/html/config.json
     ports:
-      - "${VPS_PRIVATE_IP:-127.0.0.1}:8080:80"
+      - "${VPS_PRIVATE_IP:-127.0.0.1}:${DASHBOARD_PORT:-8080}:80"
     networks:
       - dashboard-network
     depends_on:
@@ -50,8 +50,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    networks:
+      - dashboard-network
     ports:
-      - "${VPS_PRIVATE_IP:-127.0.0.1}:9000:9000"
+      - "${DOCKER_MANAGER_IP:-127.0.0.1}:${DOCKER_MANAGER_PORT:-9000}:9000"
     profiles:
       - admin
       
@@ -64,10 +66,11 @@ services:
       - letsencrypt_data:/etc/letsencrypt
     networks:
       - frontend-network
+      - dashboard-network
     ports:
-      - '${VPS_PUBLIC_IP:-0.0.0.0}:${HTTPS_PORT:-443}:443'
-      - '${VPS_PUBLIC_IP:-0.0.0.0}:${HTTP_PORT:-80}:80'
-      - '${VPS_PRIVATE_IP:-127.0.0.1}:81:81' # Admin dashboard
+      - '${HTTP_IP:-0.0.0.0}:${HTTPS_PORT:-443}:443'
+      - '${HTTP_IP:-0.0.0.0}:${HTTP_PORT:-80}:80'
+      - '${PROXY_MANAGER_IP:-127.0.0.1}:${PROXY_MANAGER_PORT:-81}:81' # Admin dashboard
     profiles:
       - core
 
@@ -80,7 +83,7 @@ services:
     networks:
       - database-network
     ports:
-      - "${VPS_PRIVATE_IP:-127.0.0.1}:3000:3000"
+      - "${DATABASE_MANAGER_IP:-127.0.0.1}:${DATABASE_MANAGER_PORT:-3000}:3000"
     profiles:
       - admin
 
@@ -95,9 +98,28 @@ services:
     networks:
       - backend-network
     ports:
-      - "${VPS_PRIVATE_IP:-127.0.0.1}:8334:8334"
+      - "${FILE_MANAGER_IP:-127.0.0.1}:${FILE_MANAGER_PORT:-8334}:8334"
     profiles:
       - admin
+      
+  dns-manager:
+    container_name: vps-dns-manager
+    image: technitium/dns-server:15.4.0
+    restart: unless-stopped
+    environment:
+      DNS_SERVER_DOMAIN: vps-dns-server
+      DNS_SERVER_LOG_FOLDER_PATH: /var/log/technitium/dns
+      DNS_SERVER_ADMIN_PASSWORD: ${DNS_MANAGER_PASS}
+    volumes:
+      - ./etc/titanium-dns:/etc/dns
+    networks:
+      - frontend-network
+    ports:
+      - "${DNS_MANAGER_IP:-127.0.0.1}:${DNS_MANAGER_PORT:-5380}:5380/tcp" #DNS web console (HTTP)
+      - "${DNS_IP:-127.0.0.1}:${DNS_PORT:-53}:53/udp" #DNS service
+      - "${DNS_IP:-127.0.0.1}:${DNS_PORT:-53}:53/tcp" #DNS service
+    profiles:
+      - dns
 
 volumes:
   dashboard_data:

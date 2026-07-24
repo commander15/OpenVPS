@@ -11,7 +11,7 @@ Get OpenVPS up and running on your server with these quick steps:
 ### 1. Install with one command
 Ensure you have Docker and Git installed on your system:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/commander15/OpenVPS/refs/heads/main/scripts/installer.sh | sh
+curl -fsSL https://raw.githubusercontent.com/commander15/OpenVPS/refs/heads/main/installers/remote-install.sh | sh
 ```
 
 ### 2. Initialize Your Environment
