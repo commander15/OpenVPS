@@ -31,10 +31,7 @@ def run_docker_compose_up(profiles: list[str], exitOnError: bool = False):
 
 def run_docker_compose_down(profiles: list[str], exitOnError: bool = False):
     args = [ 'down' ]
-    if 'core' in profiles:
-        return run_docker_compose(profiles, args, exitOnError=exitOnError)
-    else:
-        return run_docker_compose([ 'core' ] + profiles, args, exitOnError=exitOnError)
+    return run_docker_compose(profiles, args, exitOnError=exitOnError)
 
 def run_docker_compose_pull(exitOnError: bool = False):
     return run_docker_compose([ '*' ], [ 'pull', '--ignore-buildable', '--ignore-pull-failures' ], exitOnError=exitOnError)

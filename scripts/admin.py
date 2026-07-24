@@ -8,8 +8,6 @@ def down(exitOnError: bool = False):
     run_docker_compose_down([ 'admin' ], exitOnError=exitOnError)
 
 
-
-
 # ============================= MAIN =======================================
 
 if __name__ == "__main__":
