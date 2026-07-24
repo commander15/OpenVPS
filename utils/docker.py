@@ -36,8 +36,8 @@ def run_docker_compose_down(profiles: list[str], exitOnError: bool = False):
     else:
         return run_docker_compose([ 'core' ] + profiles, args, exitOnError=exitOnError)
 
-def run_docker_pull(exitOnError: bool = False):
-    return run_docker([ 'pull' ], exitOnError=exitOnError)
+def run_docker_compose_pull(exitOnError: bool = False):
+    return run_docker_compose([ '*' ], [ 'pull' ], exitOnError=exitOnError)
 
 
 # ============================================ MAIN =====================================================
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     elif subCommand == 'down':
         run_docker_compose_down(profiles, exitOnError=True)
     elif subCommand == 'pull':
-        run_docker_pull(exitOnError=True)
+        run_docker_compose_pull(exitOnError=True)
     elif subCommand == 'compose':
         run_docker_compose(profiles, args, exitOnError=True)
     else:
